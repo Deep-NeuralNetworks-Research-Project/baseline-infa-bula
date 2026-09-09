@@ -1,0 +1,10 @@
+# Ablation: proposed model WITHOUT confidence gate
+# Removes the confidence head
+
+defaults:
+  - override /model: proposed_effnet
+  - _self_
+
+model:
+  heads:
+    confidence: false

@@ -1,0 +1,10 @@
+# LEVIR-CD dataset config
+# 637 pairs at 1024x1024 -> 256x256 non-overlapping crops
+# Standard split: 7,120 / 1,024 / 2,048
+# Changed-pixel ratio: 4.65% (severe imbalance)
+
+name: levir_cd
+root: ${oc.env:CDLIB_DATA_ROOT,./data}/levir_cd
+img_size: 256
+crop_size: 256    # non-overlapping crops from 1024x1024
+num_workers: 4

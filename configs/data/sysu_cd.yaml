@@ -1,0 +1,9 @@
+# SYSU-CD dataset config
+# 20,000 pairs, 256x256, 0.5m aerial, Hong Kong 2007-2014
+# Official split: 12,000 / 4,000 / 4,000
+# Changed-pixel ratio: 21.8%
+
+name: sysu_cd
+root: ${oc.env:CDLIB_DATA_ROOT,./data}/sysu_cd
+img_size: 256
+num_workers: 4
