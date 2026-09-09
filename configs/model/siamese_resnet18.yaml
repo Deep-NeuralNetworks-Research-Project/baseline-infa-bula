@@ -1,0 +1,13 @@
+# Siamese ResNet-18 baseline (P3's model)
+# Same TorchGeo wrapper with encoder_name=resnet18, encoder_weights=imagenet
+# Tap C2-C5 at strides {4, 8, 16, 32}, channels [64, 128, 256, 512]
+# 11.7M params, ~1.8 GFLOPs @ 224x224
+#
+# PITFALLS:
+# - Siamese BN: batch-dim concat, one forward, split
+# - Stride-32 is too coarse for thin change boundaries
+
+name: fc_siam_diff
+encoder_name: resnet18
+encoder_weights: imagenet
+in_channels: 3

@@ -1,0 +1,10 @@
+# PCD (Panoramic Change Detection) dataset config
+# TSUNAMI subset: 100 pairs, 224x1024 panoramic
+# Standard protocol: 5-fold CV
+# GSV subset NOT hosted — keep off critical path
+
+name: pcd
+root: ${oc.env:CDLIB_DATA_ROOT,./data}/pcd
+subset: tsunami    # "tsunami" or "gsv" (gsv not reliably available)
+img_size: 224
+num_workers: 4
