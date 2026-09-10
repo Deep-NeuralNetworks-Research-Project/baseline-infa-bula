@@ -32,6 +32,7 @@ dependencies = [
     "scikit-image>=0.21",
     "matplotlib>=3.7",
     "tqdm>=4.65",
+    "albumentations>=2.0",
 ]
 
 [project.optional-dependencies]
