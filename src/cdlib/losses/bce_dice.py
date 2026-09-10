@@ -20,13 +20,21 @@ class BCEDiceLoss(nn.Module):
     Args:
         bce_weight: Weight for the BCE term.
         dice_weight: Weight for the Dice term.
+        pos_weight: Weight for the positive class in BCE loss.
     """
 
-    def __init__(self, bce_weight: float = 0.5, dice_weight: float = 0.5) -> None:
+    def __init__(
+        self,
+        bce_weight: float = 0.5,
+        dice_weight: float = 0.5,
+        pos_weight: float | None = None,
+    ) -> None:
         super().__init__()
         self.bce_weight = bce_weight
         self.dice_weight = dice_weight
-        self.bce = nn.BCEWithLogitsLoss(reduction="none")
+        
+        pos_weight_tensor = torch.tensor([pos_weight]) if pos_weight is not None else None
+        self.bce = nn.BCEWithLogitsLoss(reduction="none", pos_weight=pos_weight_tensor)
 
     def compute(self, outputs: dict, batch: dict) -> dict:
         """Compute the loss according to the frozen contract.
