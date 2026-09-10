@@ -1,3 +1,5 @@
+# @package _global_
+
 # Ablation: proposed model WITHOUT confidence gate
 # Removes the confidence head
 
