@@ -88,6 +88,16 @@ def build_loss(cfg: DictConfig) -> Any:
     loss_name = loss_cfg.name
 
     loss_params = {k: v for k, v in loss_cfg.items() if k != "name"}
+    
+    # Dynamic Loss Weighting for Imbalance
+    if "data" in cfg and "name" in cfg.data:
+        from cdlib.data.registry import DATASET_REGISTRY
+        dataset_cls = DATASET_REGISTRY.get(cfg.data.name)
+        ratio = getattr(dataset_cls, "published_changed_pixel_ratio", None)
+        if ratio is not None and ratio > 0 and ratio < 1:
+            pos_weight = (1.0 - ratio) / ratio
+            loss_params["pos_weight"] = pos_weight
+
     return LOSS_REGISTRY.build(loss_name, **loss_params)
 
 
