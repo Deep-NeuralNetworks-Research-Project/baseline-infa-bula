@@ -137,8 +137,8 @@ class SysuCDDataset(PairedChangeDataset):
 
     def __init__(
         self,
-        root: str | Path,
-        split: str,
+        root: str | Path | None = None,
+        split: str = "train",
         *,
         dir_time1: str = "time1",
         dir_time2: str = "time2",

@@ -185,8 +185,8 @@ class LevirCDDataset(PairedChangeDataset):
 
     def __init__(
         self,
-        root: str | Path,
-        split: str,
+        root: str | Path | None = None,
+        split: str = "train",
         *,
         crop_size: int = DEFAULT_CROP_SIZE,
         dir_a: str = "A",

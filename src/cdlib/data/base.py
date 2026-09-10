@@ -197,7 +197,7 @@ class PairedChangeDataset(Dataset, ABC):
 
     def __init__(
         self,
-        root: str | Path,
+        root: str | Path | None,
         split: str,
         *,
         transform: PairTransform | None = None,
@@ -205,7 +205,13 @@ class PairedChangeDataset(Dataset, ABC):
         stats_cache: bool = True,
         **kwargs: Any,
     ) -> None:
-        self.root = Path(root).expanduser()
+        if root is None:
+            import os
+            base_dir = os.environ.get("CDLIB_DATA_ROOT", "data")
+            self.root = Path(base_dir).expanduser() / self.name
+        else:
+            self.root = Path(root).expanduser()
+        
         self.split = split
         self.transform = transform
         self.validate = validate
