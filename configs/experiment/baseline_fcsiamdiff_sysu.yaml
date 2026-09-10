@@ -1,3 +1,5 @@
+# @package _global_
+
 # Baseline experiment: FC-Siam-Diff on SYSU-CD
 defaults:
   - override /data: sysu_cd

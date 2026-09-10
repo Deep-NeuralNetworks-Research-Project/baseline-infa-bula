@@ -1,3 +1,5 @@
+# @package _global_
+
 # Ablation: proposed model WITHOUT alignment module
 # Swap bounded alignment -> identity (no-op)
 # This tests whether alignment contributes to the result

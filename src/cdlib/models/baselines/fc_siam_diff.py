@@ -60,17 +60,12 @@ class FCSiamDiffWrapper(nn.Module):
     ) -> dict[str, torch.Tensor | None | dict]:
         """Forward pass matching the frozen model contract.
 
-        IMPORTANT: Uses batch-dim concatenation for correct Siamese BN behavior.
-        Concatenate [I1;I2] along batch dim, run one forward, split output.
+        TorchGeo v0.6+ expects a single stacked tensor of shape
+        [B, T, C, H, W] where T=2 (two temporal images).
         """
-        # Batch-dim concat for correct BN statistics
-        B = img1.shape[0]
-        x_cat = torch.cat([img1, img2], dim=0)  # [2B, C, H, W]
-
-        # TorchGeo's FCSiamDiff expects (x1, x2) but we need correct BN
-        # So we pass the concatenated batch through the encoder ourselves
-        # For now, use the standard interface — BN fix to be verified in Phase 3
-        logits = self.model(img1, img2)  # [B, 1, H, W]
+        # Stack into [B, 2, C, H, W] for TorchGeo's API
+        x = torch.stack([img1, img2], dim=1)  # [B, 2, C, H, W]
+        logits = self.model(x)  # [B, 1, H, W]
 
         return {
             "logits": logits,
@@ -80,3 +75,4 @@ class FCSiamDiffWrapper(nn.Module):
                 "alignment_offset": None,
             },
         }
+

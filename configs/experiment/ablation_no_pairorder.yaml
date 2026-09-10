@@ -1,3 +1,5 @@
+# @package _global_
+
 # Ablation: proposed model WITHOUT pair-order consistency loss
 # Uses BCE+Dice only, no pair-order regularisation
 
