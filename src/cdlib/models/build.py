@@ -51,6 +51,7 @@ def build_model(cfg: DictConfig) -> nn.Module:
 
     # For baselines, we use a flat MODEL_REGISTRY approach
     # For the proposed model, we compose from sub-registries
+    from cdlib.models.proposed import ProposedModel
     from cdlib.models._model_registry import MODEL_REGISTRY
 
     model_params = {k: v for k, v in model_cfg.items() if k != "name"}

@@ -17,13 +17,16 @@ from omegaconf import DictConfig
 logger = logging.getLogger(__name__)
 
 
-@hydra.main(version_base=None, config_path="../../../configs", config_name="config")
-def main(cfg: DictConfig) -> None:
-    """Hydra-powered training entrypoint with multirun support.
+def main() -> None:
+    """Hydra-powered training entrypoint with multirun support."""
+    import sys
+    from hydra import compose, initialize
+    from omegaconf import DictConfig
 
-    Hydra's ``-m`` flag enables sweeps automatically:
-        python -m cdlib.cli.train -m train.lr=1e-3,3e-4,1e-4
-    """
+    with initialize(version_base=None, config_path="../../../configs"):
+        cfg = compose(config_name="config", overrides=sys.argv[1:])
+
+    #   python -m cdlib.cli.train train.lr=1e-3,3e-4,1e-4
     from torch.utils.data import DataLoader
 
     from cdlib.engine.trainer import Trainer
